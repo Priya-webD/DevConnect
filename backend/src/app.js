@@ -16,6 +16,12 @@ app.use('/api/users', userRoutes);
 app.use('/api/connections', connectionRoutes);
 app.use('/api/posts', postRoutes);
 
+//centralized error handler - 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({ message: err.message || 'Server error' });
+});
+
 app.get('/api/health', (req, res) => {
     res.status(200).json({status: 'ok'});
 });

@@ -64,3 +64,38 @@ export const deletePost = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export const addComment = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: 'Post not found' });
+
+    post.comments.push({ author: req.user.id, text: req.body.text });
+    await post.save();
+    res.status(201).json({ post });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const deleteComment = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).json({ message: 'Post not found' });
+
+    const comment = post.comments.id(req.params.commentId);
+    if (!comment) return res.status(404).json({ message: 'Comment not found' });
+
+    const isCommentAuthor = comment.author.toString() === req.user.id;
+    const isPostAuthor = post.author.toString() === req.user.id;
+    if (!isCommentAuthor && !isPostAuthor) {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+
+    comment.deleteOne();
+    await post.save();
+    res.status(200).json({ message: 'Comment deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
