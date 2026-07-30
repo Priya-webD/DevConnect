@@ -1,2 +1,0 @@
-# DevConnect
-Developer Social Platform
