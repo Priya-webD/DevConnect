@@ -1,3 +1,3 @@
 export default function Profile() {
-  return <div className="p-8">Profile Page</div>;
+  return <div className="p-8"></div>;
 }
