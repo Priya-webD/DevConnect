@@ -10,6 +10,9 @@ import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import Feed from './pages/Feed.jsx';
 import Profile from './pages/Profile.jsx';
+import Discover from './pages/Discover.jsx';
+import ConnectionRequests from './pages/ConnectionRequests.jsx';
+import MyConnections from './pages/MyConnections.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -36,6 +39,29 @@ createRoot(document.getElementById('root')).render(
               </ProtectedRoute>
             }
           />
+          <Route
+          path="/discover"
+           element={
+          <ProtectedRoute>
+               <Discover />
+          </ProtectedRoute>
+        }/>
+        <Route
+  path="/requests"
+  element={
+    <ProtectedRoute>
+      <ConnectionRequests />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/connections"
+  element={
+    <ProtectedRoute>
+      <MyConnections />
+    </ProtectedRoute>
+  }
+/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

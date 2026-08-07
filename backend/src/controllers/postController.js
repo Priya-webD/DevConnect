@@ -23,9 +23,13 @@ export const getFeed = async (req, res) => {
     );
     connectedIds.push(userId);
 
-    const posts = await Post.find({ author: { $in: connectedIds } })
-      .sort({ createdAt: -1 })
-      .populate('author', 'name avatar');
+    //const posts = await Post.find({ author: { $in: connectedIds } })
+    //  .sort({ createdAt: -1 })
+     // .populate('author', 'name avatar');
+     const posts = await Post.find({ author: { $in: connectedIds } })
+     .sort({ createdAt: -1 })
+     .populate('author', 'name avatar')
+     .populate('comments.author', 'name');
 
     res.status(200).json({ posts });
   } catch (err) {
@@ -72,6 +76,7 @@ export const addComment = async (req, res) => {
 
     post.comments.push({ author: req.user.id, text: req.body.text });
     await post.save();
+    await post.populate('comments.author', 'name');
     res.status(201).json({ post });
   } catch (err) {
     res.status(500).json({ message: err.message });

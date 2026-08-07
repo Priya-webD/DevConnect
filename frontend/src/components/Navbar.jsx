@@ -20,12 +20,15 @@ export default function Navbar() {
             <Link to="/feed">Feed</Link>
             <Link to={`/profile/${user.id}`}>Profile</Link>
             <Link to="/connections">Connections</Link>
+            <Link to="/discover">Discover</Link>
+            <Link to="/requests">Requests</Link>
             <button onClick={handleLogout} className="text-red-600">Logout</button>
           </>
         ) : (
           <>
             <Link to="/login">Login</Link>
             <Link to="/signup">Signup</Link>
+            
           </>
         )}
       </div>
